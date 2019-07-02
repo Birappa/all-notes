@@ -1,0 +1,49 @@
+=====================OpenShift Training=========================
+
+-cgroup
+-namespace
+-capability
+
+=======Docker=====
+Is tool which containerize the application
+
+======Kubernetes===
+Orchestraion tool
+
+=====OpenShift=========
+Is Paas solution and as well as orchestration tool.
+
+=======Container=======
+Where application instances and its componentes are running.
+-all dependencies, libraries are included
+-Isolates applications
+-virtulization technology
+
+gluster sorage 
+chef storage
+
+openshift 3.11 installation host preparation document
+software defined storage
+emc storage
+block storage
+file stoarge
+object storage
+
+CRIO Run
+
+IvTlDJqW pass
+user154 user
+
+ https://console-openshift-console.apps.cluster-cf39.cf39.sandbox507.opentlc.com
+
+ scp birappa.patil-capgemini.com@bastion.cf39.sandbox507.opentlc.com:/home/birappa.patil-capgemini.com/graph.svg .
+
+https://training-lms.redhat.com/sso/saml/auth/rhopen?RelayState=deeplinkLP%3D40359570
+
+valex@redhat.com
+
+ssh -i ~/.ssh/your_private_key_name birappa.patil-capgemini.com@bastion.bb90.example.opentlc.com
+
+ssh -i ~/.ssh/id_rsa birappa.patil-capgemini.com@bastion.dffc.example.opentlc.com
+
+

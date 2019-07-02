@@ -1,0 +1,481 @@
+============================================DevOps Notes==============================================
+
+DevOps - is Culture, practices, automation and technology to achieve project target
+
+DevOps cycle
+
+step 1 : Source Code/Control Management(SCM)   -- Git
+
+	Github/Gitlab/bitbucket
+
+step 2: Continous Integration
+	Jenkins
+	bamboo/circleCi 
+
+step 3 : staging environment or production like server
+
+After CD
+
+infrastructure as a code --- {terraform, docker}  
+configuration management --- {puppet, chef, ansible}
+Archestration --- { docker swarm, kubernetes}
+Monitoring (keeping track of each service) --- {ELK- elastic search, log stash and kibana, nagios}
+
+
+
+=============================================python==============================
+------------------data types--------------------
+
+
+Numbers
+String
+List
+Tuple
+Set
+Dictionary
+
+======================flow control=================
+ x = int(input("Please enter an integer: "))
+Please enter an integer: 42
+>>> if x < 0:
+...     x = 0
+...     print('Negative changed to zero')
+... elif x == 0:
+...     print('Zero')
+... elif x == 1:
+...     print('Single')
+... else:
+...     print('More')
+
+---------------------------for statement------------------------
+
+>>> # Measure some strings:
+... words = ['cat', 'window', 'defenestrate']
+>>> for w in words:
+...     print(w, len(w))
+...
+cat 3
+window 6
+defenestrate 12
+
+for i in range(5):
+...     print(i)
+...
+0
+1
+2
+3
+4
+
+
+
+=============================================functions===========================================
+
+def fib(n):    # write Fibonacci series up to n
+...     """Print a Fibonacci series up to n."""
+...     a, b = 0, 1
+...     while a < n:
+...         print(a, end=' ')
+...         a, b = b, a+b
+...     print()
+...
+>>> # Now call the function we just defined:
+... fib(2000)
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597
+
+
+list
+
+
+==============================Regular Expression=======================
+regexpal.com
+\d - Any Numeric digit from 0 to 9
+\D - Any Character that is not a numeric digit from 0 to 9
+\w - Any letter, numeric digit or the underscore character.
+\W - Any character that not a letter, numeric digit or the underscore
+\s - Any spce, tab or new line character
+\S - Any character that is not a space, tab or new line 
+^ - caret means start
+$ - means end
+. - single caracter
+
+
+case sensitive and in sensitive search
+
+
+========================================================jenkins day3=========================================
+
+
+------------------Cron Syntax--------------
+* * * * *
+
+1st * - minute(0-59)
+2nd * - hour(0-23)
+3rd * - day of month(1-31)
+4rt * - month(1-12)
+5th * - day of week(0-6)(sunday=0)
+
+*  	all valid values
+M-N 	a range of values
+A,B,Z 	Enumerates multiple values
+
+----------examples
+0 0 * * *   	every day at midnight
+
+0 2-4 * * * 	2 am, 3 am and 4 am every day
+
+
+-------------------tomcat-users.xml------------
+
+<role rolename="manager-script">
+<role rolename="admin-gui">
+<user username="jenkins" password="jenkins" role="manager-script, admin-gui">
+
+
+-----------------------------troubleshooting for running tomcat server if tomcat is not running---------------
+set CATALINA_HOME=C://apache-tomact-path
+
+make following changes to server.xml file
+change server port
+change connector port of http
+change redirect port
+cchange connector port of ajp
+
+
+-----------------------------Cycle--------------------------
+
+Continous Integration ===========> Continous Delivery ================> Continous Deployment
+
+Jenkins server			Staging server(area)(tomcat server)	Production server(tomcat server)
+
+-------------------------create build-package project--------------------
+
+-Source code management
+	select git and give git repository path
+- Build
+	select invoke top level maven project
+	version - local-maven(name)
+	goal - clean package
+- post-build-action
+	archive the artifact - **/*.war
+	build other project - deploy-to-staging(project name)
+-save
+
+
+--------------------------create deploy-to-staging project---------------------
+
+- Build
+	copy artifact from another project
+		name- build-package
+		artifact copy - **/*.war
+- post-build actions
+		deploy war/ear to container
+			file- **/*.war
+			containers - credentials - username -jenkins and password- jenkins url- http://localhost:8081 (tomcat url)
+		build other projects deploy-to-prod (project name)
+
+
+---------------------------create deploy-to-prod project------------------------
+
+-copy artifact from another project
+		name- build-package
+		artifact copy - **/*.war
+- post-build actions
+		deploy war/ear to container
+			file- **/*.war
+			containers - credentials - username -jenkins and password- jenkins url- http://localhost:8081 (tomcat url)
+
+
+=====================================
+tasks
+1. deploy to staging
+2. code quality
+3. deploy to prod - with manual approval should be done within 5 days else it fails
+
+
+
+=================================creating jenkins file======================
+Jenkinsfile (Declarative Pipeline)
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+}
+
+
+-------------------------
+pipeline {
+    agent any
+	
+    stages {
+        stage('Build') {
+            steps {
+                bat script: 'mvn clean package'
+            }
+			post {
+				success {
+					echo 'archiving artifact...'
+					archiveArtifacts artifacts: '**/*.war'
+				}
+			}
+        }
+        
+    }
+}
+	
+
+
+===============================================Docker=================================
+
+docker- container management tool
+docker engine + api call
+
+docker engine - lib container
+
+why container? -- application isolation
+
+
+Namespaces and control groups
+
+Namespaces -- Own filesystems,  process tree, etc..
+
+
+Control group - CPU, RAM, etc... 
+
+
+ssh -i ec2-docker.pem ec2-user@52.91.104.53
+
+CTR+p+q -- to come out of container
+
+docker rm [container name| Id]   --  to remove container
+docker rmi [image id]   --- to remove image
+
+docker ps
+docker ps -a
+
+docker --help
+docker run [image name]
+docker images
+docker build 
+
+
+
+
+
+
+
+
+============================================docker swarm==================
+manager-worker structure
+docker info
+docker swarm init
+
+manager nodes
+worker nodes
+
+docker swarm join-token [worker/manager] 
+
+
+
+
+==============================================kubernetes======================================
+
+kubernetes - orchestration tool
+uses master-slave structure
+minimum 2 machine requires
+
+kubectl
+kubeadm init
+
+
+domain-driven-design book by eric evan
+
+
+pod is smallest unit in kubernetes
+
+
+yaml file
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    app: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+
+
+
+kubectl expose rc hello-rc --name=hello-svc --target-port=8080 --type=NodePort
+
+AWS account
+id - capgeminishact
+username - satyen.singh
+pass - Satyen@123
+
+
+kubectl cluster-info
+curl http://ip:port/nginx/
+
+kubectl create -f [filename]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+

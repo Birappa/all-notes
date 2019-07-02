@@ -1,0 +1,31 @@
+=======================Spring Core===================
+- spring conatainers - BeanFactory and ApplicationContext
+
+-ApplicationContext is built top of BeanFactory and having more enterprise features.
+
+==========Inversion of control=======
+-we don't create object.
+-object shall be configured in xml file and created by spring conatiner.
+- Control of object is given to spring conatainer.
+- complete life cycle of object is managed by container. creation, destroy, etc.
+
+======================Dependency Injection===================
+- it reduces the complexity of programming code.
+- it makes programming loosely coupled.
+- it searches dependency and inject object using container.
+- using dependency injection inversion of control is achieved.
+ 
+  
+
+
+======================Array vs vector==========================
+Vector is dynamically growth, they resizable in nature
+vector is syncronized
+
+
+============Comparable vs Comparator==============
+Comparable is  used to compare instances of its own classes where comparator is used to compare two different objects.
+
+comparable is single sorting sequence means only one property can use for compare like id, name or salary.
+Where as comparator is multiple sorting sequence means can use multiple variable to compare like id , name.
+

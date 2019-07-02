@@ -1,0 +1,4 @@
+my.dot.tk--free domain
+
+nyc framework for code coverage for nodejs
+mocha-chai framework for unit testing

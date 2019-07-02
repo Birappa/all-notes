@@ -1,0 +1,13 @@
+reject hone par. the reason of the rejection should be mentioned in the pop-up . 
+associate page mai status k sathh there should be column  showing the reason for the rejection
+
+
+
+ reviewshould be changed preview.
+
+create new will redirect to a new fresh page with no values.
+color to be changed of the dropdown  under new promotions
+
+
+view active page -pending
+

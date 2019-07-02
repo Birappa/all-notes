@@ -1,0 +1,128 @@
+## 
+## The example Pod YAML file
+
+kubectl get nodes
+kubectl create -f pod.yml
+kubectl get pods
+kubectl describe pods
+
+## 
+## The example Replicaton Controller YAML file
+
+kubectl get pods -o wide
+kubectl get pods/hello-pod
+kubectl get pods --all-namespaces
+
+kubectl delete pods/hello-pod
+kubectl delete pod hello-pod
+
+kubectl create -f rc.yml
+kubectl get rc -o wide
+kubectl describe rc
+kubectl apply -f rc.yml
+
+kubectl get rc
+kubectl get pods
+
+
+
+## Sample Pod YAML file used in example (called pod.yml):
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-pod
+spec:
+  containers:
+  - name: hello-ctr
+    image: <registry>/<image-name>:<tag>
+    ports:
+    - containerPort: 8080
+
+
+
+
+
+
+
+
+
+
+
+
+
+#On Master
+	kubectl create -f pod.yml
+
+
+
+
+
+	
+## Sample Replication Controller YAML file used in example (called rc.yml):
+	
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: hello-rc
+spec:
+  replicas: 10
+  selector:
+    app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      containers:
+      - name: hello-ctr
+        image: satyendrasingh/webapp:latest
+        ports:
+        - containerPort: 8080
+
+
+
+
+
+### Wrapping the hello-rc Replication Controller in a Service - the iterative way
+
+$ kubectl expose rc hello-rc --name=hello-svc --target-port=8080 --type=NodePort
+
+$ kubectl describe svc hello-svc
+
+
+
+
+
+
+### The following commands list all Endpoint objects on the cluster and then describes the Endpoint object called "hello-svc"
+kubectl get ep
+kubectl describe ep hello-svc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
