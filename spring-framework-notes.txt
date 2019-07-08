@@ -8,12 +8,21 @@
 -object shall be configured in xml file and created by spring conatiner.
 - Control of object is given to spring conatainer.
 - complete life cycle of object is managed by container. creation, destroy, etc.
+- writing them together.
+- confugure.
+
+This process is fundamentally the inverse (hence the name, Inversion of Control) of the bean itself controlling the instantiation or location of its dependencies by using direct construction of classes or a mechanism such as the Service Locator pattern.
+
+ApplicationContext context = new ClassPathXmlApplicationContext("services.xml", "daos.xml");
 
 ======================Dependency Injection===================
+- it is design pattern which removes dependency from programming code, that makes application easy to manage and test.
+- makes our programming code loosely coupled.
 - it reduces the complexity of programming code.
 - it makes programming loosely coupled.
 - it searches dependency and inject object using container.
 - using dependency injection inversion of control is achieved.
+- DI exists in two major variants: Constructor-based dependency injection and Setter-based dependency injection.
  
   
 ================Annotations==============================
@@ -40,13 +49,6 @@
 @EnableEurekaServer
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-
-
-
-
-
-
-
 
 
 

@@ -336,10 +336,6 @@ spec:
 
 kubectl expose rc hello-rc --name=hello-svc --target-port=8080 --type=NodePort
 
-AWS account
-id - capgeminishact
-username - satyen.singh
-pass - Satyen@123
 
 
 kubectl cluster-info
